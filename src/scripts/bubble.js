@@ -54,6 +54,16 @@ class Bubble {
       { ...opts, vel: [this.vel[0] * -1, this.vel[1]] },
     ].forEach((o) => this.game.addBubble(o));
   }
+
+  isCollidedWith(obj) {
+    if (Array.isArray(obj)) return false;
+    const pX = Math.max(Math.min(this.pos[0], obj.width + obj.pX), obj.pX);
+    const pY = Math.max(Math.min(this.pos[1], obj.height + obj.pY), obj.pY);
+    const distance = Math.sqrt(
+      (this.pos[0] - pX) ** 2 + (this.pos[1] - pY) ** 2
+    );
+    return distance < this.radius;
+  }
 }
 
 module.exports = Bubble;
