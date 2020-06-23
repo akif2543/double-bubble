@@ -14,9 +14,14 @@ class Game {
     this.DIMY = 600;
     this.level = 1;
     this.bubbles = [];
-    this.addBubble({ pos: [50, 300], vel: [10, 10], radius: 40, color: "red" });
+    this.addBubble({ pos: [50, 300], vel: [5, 5], radius: 20, color: "red" });
     this.player = new Player(this);
     this.projectile = [];
+    this.bg = new Image();
+    // this.img.onload = () => {
+    //   ctx.drawImage(this.img, this.pX, this.pY, this.width, this.height);
+    // };
+    this.bg.src = "db_bg.jpg";
     // this.startingPos = [Math.floor(this.DIMX / 5), Math.floor(this.DIMY / 4)];
   }
 
@@ -37,6 +42,10 @@ class Game {
     if (Array.isArray(this.projectile)) this.projectile = p;
   }
 
+  resetProjectile() {
+    this.projectile = [];
+  }
+
   allObjs() {
     return this.bubbles.concat(this.player, this.projectile);
   }
@@ -47,9 +56,9 @@ class Game {
 
   draw(ctx) {
     ctx.clearRect(0, 0, this.DIMX, this.DIMY);
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, this.DIMX, this.DIMY);
-    // ctx.drawImage(img, 0, 0);
+    // ctx.fillStyle = "black";
+    // ctx.fillRect(0, 0, this.DIMX, this.DIMY);
+    ctx.drawImage(this.bg, 0, 0, this.DIMX, this.DIMY);
     this.allObjs().forEach((b) => b.draw(ctx));
   }
 
@@ -63,6 +72,7 @@ class Game {
         alert("you lost a life!");
       } else if (b.isCollidedWith(this.projectile)) {
         this.remove(b);
+        this.resetProjectile();
       }
     });
   }

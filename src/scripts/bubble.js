@@ -21,37 +21,42 @@ class Bubble {
   }
 
   move(delta = 1) {
-    const [posX, posY] = this.pos;
-    const [velX, velY] = this.vel;
-    this.pos = [posX + (velX * delta) / 20, posY + (velY * delta) / 20];
+    const [pX, pY] = this.pos;
+    const [vX, vY] = this.vel;
+    this.pos = [pX + (vX * delta) / 20, pY + (vY * delta) / 20];
     this.applyPhysics();
   }
 
   applyPhysics() {
-    const [posX, posY] = this.pos;
+    const [pX, pY] = this.pos;
     this.vel[1] += this.GRAVITY;
 
-    if (posX + this.radius >= this.game.DIMX || posX - this.radius <= 0) {
-      console.log(this.vel[0]);
+    if (pX + this.radius >= this.game.DIMX || pX - this.radius <= 0) {
       this.vel[0] *= Math.abs(this.vel[0]) > 7 ? this.BOUNCE : -1.1;
     }
-    if (posY + this.radius >= this.game.DIMY) {
-      console.log(this.vel[1]);
+    if (pY + this.radius >= this.game.DIMY) {
       this.pos[1] = this.game.DIMY - this.radius;
       this.vel[1] *= this.vel[1] > 14 ? this.BOUNCE : -1;
     }
   }
 
   divide() {
+    const [pX, pY] = this.pos;
+    const [vX, vY] = this.vel;
+    const displacement = this.radius;
     const opts = {
-      pos: this.pos,
-      vel: this.vel,
+      pos: [pX + displacement, pY - displacement],
+      vel: [vX * -this.BOUNCE, vY / -this.BOUNCE],
       radius: this.radius / 2,
       color: this.color,
     };
     return [
       opts,
-      { ...opts, vel: [this.vel[0] * -1, this.vel[1]] },
+      {
+        ...opts,
+        pos: [pX - displacement, opts.pos[1]],
+        vel: [opts.vel[0] * -1, opts.vel[1]],
+      },
     ].forEach((o) => this.game.addBubble(o));
   }
 
@@ -62,7 +67,7 @@ class Bubble {
     const distance = Math.sqrt(
       (this.pos[0] - pX) ** 2 + (this.pos[1] - pY) ** 2
     );
-    return distance < this.radius;
+    return distance < this.radius * 0.3;
   }
 }
 

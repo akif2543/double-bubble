@@ -6,16 +6,21 @@ class Player {
     this.lives = 5;
     this.score = 0;
     this.color = "white";
-    this.width = 30;
-    this.height = this.game.DIMY / 8;
-    this.pY = this.game.DIMY - this.height;
+    this.width = 50;
+    this.height = this.game.DIMY / 6;
     this.pX = this.game.DIMX / 2;
-    this.center = [this.pX + this.width / 2, this.pY + this.height / 2];
+    this.pY = this.game.DIMY - this.height;
+    this.img = new Image();
+    // this.img.onload = () => {
+    //   ctx.drawImage(this.img, this.pX, this.pY, this.width, this.height);
+    // };
+    this.img.src = "player_back.png";
   }
 
   draw(ctx) {
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.pX, this.pY, this.width, this.height);
+    // ctx.fillStyle = this.color;
+    // ctx.fillRect(this.pX, this.pY, this.width, this.height);
+    ctx.drawImage(this.img, this.pX, this.pY, this.width, this.height);
   }
 
   move(dir) {
