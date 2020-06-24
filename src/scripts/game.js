@@ -5,16 +5,16 @@ class Game {
   constructor(ctx) {
     this.ctx = ctx;
     this.setDimensions();
-    this.level = 3;
+    this.level = 1;
     this.bubbles = [];
-    this.player = new Player(this);
+    this.player = new Player(ctx, this);
     this.bg = new Image();
+    this.bg.onload = () => ctx.drawImage(this.bg, 0, 0, this.DIMX, this.DIMY);
     this.bg.src = "db_bg.jpg";
-    this.pause = true;
+    this.pause = false;
     this.over = !this.player.lives;
     this.togglePause = this.togglePause.bind(this);
-    this.resetLevel();
-    // this.startingPos = [Math.floor(this.DIMX / 5), Math.floor(this.DIMY / 4)];
+    // this.resetLevel();
   }
 
   setDimensions() {
@@ -59,6 +59,15 @@ class Game {
   draw(ctx) {
     ctx.clearRect(0, 0, this.DIMX, this.DIMY);
     ctx.drawImage(this.bg, 0, 0, this.DIMX, this.DIMY);
+    ctx.font = "24px Orbitron";
+    ctx.fillStyle = "white";
+    ctx.fillText(
+      `${this.player.lives} ${this.player.lives === 1 ? "life" : "lives"} left`,
+      this.LWALL + 15,
+      25,
+      150
+    );
+    ctx.fillText(`level ${this.level}`, this.DIMX / 2 - 50, 25, 100);
     this.allObjs().forEach((b) => b.draw(ctx));
   }
 
@@ -69,8 +78,6 @@ class Game {
   checkCollisions() {
     this.bubbles.forEach((b) => {
       if (b.isCollidedWith(this.player)) {
-        debugger;
-        this.togglePause();
         this.player.decrementLife();
         this.checkStatus("p");
       } else if (b.isCollidedWith(this.projectile)) {
@@ -91,7 +98,6 @@ class Game {
     }
 
     if (!this.bubbles.length) {
-      this.togglePause();
       this.level++;
       this.resetLevel();
     }

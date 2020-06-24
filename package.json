@@ -26,12 +26,12 @@
   },
   "homepage": "https://github.com/akif2543/double-bubble#readme",
   "dependencies": {
-    "keymaster": "^1.6.2"
+    "@fortawesome/fontawesome-free": "^5.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
     "@babel/preset-env": "^7.10.3",
-    "autoprefixer": "^9.8.2",
+    "autoprefixer": "^9.8.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.6.0",
     "fibers": "^5.0.0",

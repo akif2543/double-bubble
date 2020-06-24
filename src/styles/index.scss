@@ -1,0 +1,40 @@
+@import "./reset.scss";
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap");
+
+body {
+  background: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgb(18, 112, 235);
+
+  font: {
+    family: "Orbitron", sans-serif;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  nav {
+    width: 1000px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 25px 0;
+
+    h1 {
+      font-size: 48px;
+      transform: translateY(2px);
+    }
+
+    h3 {
+      font-size: 24px;
+    }
+  }
+
+  #game {
+    margin: 0 auto;
+  }
+}

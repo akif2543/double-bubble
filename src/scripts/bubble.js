@@ -1,5 +1,3 @@
-const Player = require("./player");
-
 class Bubble {
   constructor(opts, game) {
     this.game = game;

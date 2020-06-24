@@ -84,6 +84,6 @@ module.exports = {
       chunkFilename: "[id].css",
       ignoreOrder: false, // Enable to remove warnings about conflicting order
     }),
-    // require("autoprefixer"),
+    require("autoprefixer"),
   ],
 };
