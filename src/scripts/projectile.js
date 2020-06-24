@@ -2,15 +2,17 @@ class Projectile {
   constructor(pos, game) {
     this.game = game;
     [this.pX, this.pY] = pos;
-    this.width = 5;
-    this.height = this.game.DIMY - this.pY;
-    this.color = "yellow";
+    this.width = 7;
+    this.height = this.game.FLOOR - this.pY;
     this.SPEED = 0.75;
+    this.img = new Image();
+    this.img.src = "laser.png";
   }
 
   draw(ctx) {
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.pX, this.pY, this.width, this.height);
+    ctx.drawImage(this.img, this.pX, this.pY, this.width, this.height);
+    // ctx.fillStyle = this.color;
+    // ctx.fillRect(this.pX, this.pY, this.width, this.height);
   }
 
   move(delta) {
