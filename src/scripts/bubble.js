@@ -1,3 +1,5 @@
+const Player = require("./player");
+
 class Bubble {
   constructor(opts, game) {
     this.game = game;
@@ -14,15 +16,29 @@ class Bubble {
 
   draw(ctx) {
     const [x, y] = this.pos;
+    ctx.save();
     ctx.beginPath();
     ctx.arc(x, y, this.radius, 0, 2 * Math.PI);
-    ctx.drawImage(this.img, x, y, this.radius * 2, this.radius * 2);
+    ctx.closePath();
+    ctx.clip();
+    ctx.drawImage(
+      this.img,
+      x - this.radius,
+      y - this.radius,
+      this.radius * 2,
+      this.radius * 2
+    );
+    ctx.beginPath();
+    ctx.arc(x, y, this.radius, 0, 2 * Math.PI);
+    ctx.clip();
+    ctx.closePath();
+    ctx.restore();
   }
 
   move(delta = 1) {
     const [pX, pY] = this.pos;
     const [vX, vY] = this.vel;
-    this.pos = [pX + (vX * delta) / 40, pY + (vY * delta) / 40];
+    this.pos = [pX + (vX * delta) / 30, pY + (vY * delta) / 30];
     this.applyPhysics();
   }
 
@@ -30,29 +46,15 @@ class Bubble {
     const [pX, pY] = this.pos;
     this.vel[1] += this.GRAVITY;
 
-    if (this.radius === 40) {
-      if (
-        pX + this.radius >= this.game.RWALL - 30 ||
-        pX - this.radius <= this.game.LWALL - 40
-      ) {
-        this.vel[0] *= Math.abs(this.vel[0]) > 7 ? this.BOUNCE : -1.1;
-      }
-      if (pY + this.radius >= this.game.FLOOR - 30) {
-        this.pos[1] = this.game.FLOOR - this.radius - 30;
-        this.vel[1] *= this.vel[1] > 14 ? this.BOUNCE : -1;
-      }
-    } else {
-      if (
-        pX + this.radius >= this.game.RWALL ||
-        pX - this.radius <= this.game.LWALL
-      ) {
-        this.vel[0] *= Math.abs(this.vel[0]) > 7 ? this.BOUNCE : -1.1;
-      }
-      if (pY + this.radius >= this.game.FLOOR) {
-        debugger;
-        this.pos[1] = this.game.FLOOR - this.radius;
-        this.vel[1] *= this.vel[1] > 14 ? this.BOUNCE : -1;
-      }
+    if (
+      pX + this.radius >= this.game.RWALL ||
+      pX - this.radius <= this.game.LWALL
+    ) {
+      this.vel[0] *= Math.abs(this.vel[0]) > 7 ? this.BOUNCE : -1.1;
+    }
+    if (pY + this.radius * 0.7 >= this.game.FLOOR) {
+      this.pos[1] = this.game.FLOOR - this.radius;
+      this.vel[1] *= this.vel[1] > 14 ? this.BOUNCE : -1;
     }
   }
 
@@ -78,12 +80,31 @@ class Bubble {
 
   isCollidedWith(obj) {
     if (Array.isArray(obj)) return false;
-    const pX = Math.max(Math.min(this.pos[0], obj.width + obj.pX), obj.pX);
-    const pY = Math.max(Math.min(this.pos[1], obj.height + obj.pY), obj.pY);
-    const distance = Math.sqrt(
-      (this.pos[0] - pX) ** 2 + (this.pos[1] - pY) ** 2
-    );
-    return distance < 8; //distance < this.radius * 0.3;
+
+    // take 1
+    // const diff = obj instanceof Player ? 0.8 : 0.9;
+
+    // const pX = Math.max(Math.min(this.pos[0], obj.width + obj.pX), obj.pX);
+    // const pY = Math.max(Math.min(this.pos[1], obj.height + obj.pY), obj.pY);
+    // const distance = Math.sqrt(
+    //   (this.pos[0] - pX) ** 2 + (this.pos[1] - pY) ** 2
+    // );
+    // console.log(distance);
+    // return distance < this.radius * diff;
+
+    // take 2
+    const dX = Math.abs(this.pos[0] - obj.pX - obj.width / 2) * 1.2;
+    const dY = Math.abs(this.pos[1] - obj.pY - obj.height / 2);
+
+    if (dX > obj.width / 2 + this.radius || dY > obj.height / 2 + this.radius)
+      return false;
+    if (dX <= obj.width / 2 || dY <= obj.height / 2) return true;
+
+    const pX = dX - obj.width / 2;
+    const pY = dY - obj.height / 2;
+
+    const dist = pX ** 2 + pY ** 2;
+    return dist <= this.radius ** 2;
   }
 }
 

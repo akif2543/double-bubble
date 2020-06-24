@@ -50,7 +50,7 @@ class GameView {
     this.last = now;
     if (this.game.pause) {
       this.stop();
-      setTimeout(this.game.togglePause, 2000);
+      setTimeout(this.game.togglePause, 5000);
     }
     this.requestId = requestAnimationFrame(this.animate);
   }

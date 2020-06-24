@@ -1,21 +1,13 @@
 const Bubble = require("./bubble");
 const Player = require("./player");
 
-// const diff = {
-//   1: [10],
-//   2: [20],
-//   3: [40],
-//   4: [40, 40],
-// };
-
 class Game {
   constructor(ctx) {
     this.ctx = ctx;
     this.setDimensions();
-    this.level = 2;
+    this.level = 3;
     this.bubbles = [];
     this.player = new Player(this);
-    // this.projectile = [];
     this.bg = new Image();
     this.bg.src = "db_bg.jpg";
     this.pause = true;
@@ -28,7 +20,7 @@ class Game {
   setDimensions() {
     this.DIMX = 1000;
     this.DIMY = 600;
-    this.FLOOR = this.DIMY - 45;
+    this.FLOOR = this.DIMY - 53;
     this.LWALL = 80;
     this.RWALL = this.DIMX - 80;
   }
@@ -55,7 +47,9 @@ class Game {
   }
 
   allObjs() {
-    return this.bubbles.concat(this.projectile, this.player);
+    return Array.isArray(this.projectile)
+      ? this.projectile.concat(this.bubbles, this.player)
+      : [this.projectile].concat(this.bubbles, this.player);
   }
 
   movingObjs() {
@@ -75,6 +69,7 @@ class Game {
   checkCollisions() {
     this.bubbles.forEach((b) => {
       if (b.isCollidedWith(this.player)) {
+        debugger;
         this.togglePause();
         this.player.decrementLife();
         this.checkStatus("p");
@@ -108,7 +103,7 @@ class Game {
       case 1:
         this.addBubble({
           pos: [this.LWALL + 11, 200],
-          vel: [5, 5],
+          vel: [15, 15],
           radius: 10,
           color: "red",
         });
@@ -116,7 +111,7 @@ class Game {
       case 2:
         this.addBubble({
           pos: [this.LWALL + 22, 200],
-          vel: [5, 5],
+          vel: [15, 15],
           radius: 20,
           color: "red",
         });
@@ -124,7 +119,7 @@ class Game {
       case 3:
         this.addBubble({
           pos: [this.LWALL + 84, 200],
-          vel: [5, 5],
+          vel: [15, 15],
           radius: 40,
           color: "red",
         });
@@ -132,13 +127,13 @@ class Game {
       case 4:
         this.addBubble({
           pos: [this.LWALL + 84, 200],
-          vel: [5, 5],
+          vel: [15, 15],
           radius: 40,
           color: "red",
         });
         this.addBubble({
           pos: [this.RWALL - 84, 200],
-          vel: [-5, 5],
+          vel: [-15, 15],
           radius: 40,
           color: "red",
         });
