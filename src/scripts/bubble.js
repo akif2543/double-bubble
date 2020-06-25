@@ -1,5 +1,5 @@
 class Bubble {
-  constructor(opts, game) {
+  constructor(opts, ctx, game) {
     this.game = game;
     this.radius = opts.radius;
     this.color = opts.color;
@@ -9,6 +9,7 @@ class Bubble {
     this.BOUNCE = -0.9;
     this.canDivide = this.radius !== 5;
     this.img = new Image();
+    this.img.onload = () => this.draw(ctx);
     this.img.src = "yellow_disc.png";
   }
 

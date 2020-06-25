@@ -8,13 +8,11 @@ class Game {
     this.level = 1;
     this.bubbles = [];
     this.player = new Player(ctx, this);
-    this.bg = new Image();
-    this.bg.onload = () => ctx.drawImage(this.bg, 0, 0, this.DIMX, this.DIMY);
-    this.bg.src = "db_bg.jpg";
-    this.pause = false;
     this.over = !this.player.lives;
     this.togglePause = this.togglePause.bind(this);
-    // this.resetLevel();
+    this.bg = new Image();
+    this.bg.onload = () => this.draw(ctx); // ctx.drawImage(this.bg, 0, 0, this.DIMX, this.DIMY);
+    this.bg.src = "db_bg.jpg";
   }
 
   setDimensions() {
@@ -35,7 +33,7 @@ class Game {
   }
 
   addBubble(opts) {
-    this.bubbles.push(new Bubble(opts, this));
+    this.bubbles.push(new Bubble(opts, this.ctx, this));
   }
 
   setProjectile(p) {

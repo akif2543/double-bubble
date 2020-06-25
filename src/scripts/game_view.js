@@ -6,7 +6,12 @@ class GameView {
     this.game = new Game(ctx);
     this.last = 0;
     this.bg = new Image();
-    this.bg.onload = () => ctx.drawImage(this.bg, 0, 0, 1000, 600);
+    this.bg.onload = () => {
+      ctx.drawImage(this.bg, 0, 0, 1000, 600);
+      ctx.font = "48px Orbitron";
+      ctx.fillStyle = "white";
+      ctx.fillText("Click to start", 400, 300, 200);
+    };
     this.bg.src = "db_bg.jpg";
     this.start = this.start.bind(this);
     this.animate = this.animate.bind(this);
@@ -20,32 +25,21 @@ class GameView {
       e.preventDefault();
       keys[e.key] = e.type === "keydown";
 
-      // if (keys[" "]) this.game.player.fire();
-      // if (keys.a || keys.A) this.game.player.move(-20);
-      // else this.game.player.move(0);
-      // if (keys.d || keys.D) this.game.player.move(20);
-      // else this.game.player.move(0);
-
       switch (true) {
         case keys[" "]:
           this.game.player.fire();
           break;
-        case keys["a"]:
-          this.game.player.move(-20);
+        case keys.a || keys.A:
+          this.game.player.move(-15);
           break;
-        case keys["A"]:
-          this.game.player.move(-20);
+        // case keys["A"]:
+        //   this.game.player.move(-15);
+        //   break;
+        case keys.d || keys.D:
+          this.game.player.move(15);
           break;
-        case keys["d"]:
-          this.game.player.move(20);
-          break;
-        case keys["D"]:
-          this.game.player.move(20);
-          break;
-        // case keys["Enter"]:
-        //   this.game.togglePause();
-        //   this.last = 0;
-        //   if (!this.game.pause) this.start();
+        // case keys["D"]:
+        //   this.game.player.move(15);
         //   break;
         default:
           this.game.player.move(0);
@@ -57,10 +51,8 @@ class GameView {
   }
 
   welcome() {
-    // this.game.draw(this.ctx);
-    this.ctx.drawImage(this.bg, 0, 0);
-    const canvas = document.getElementById("game");
-    canvas.addEventListener("mouseup", this.start);
+    this.canvas = document.getElementById("game");
+    this.canvas.addEventListener("mouseup", this.start);
   }
 
   animate(now) {
@@ -75,6 +67,7 @@ class GameView {
   start() {
     this.game = this.game.player.lives ? this.game : new Game(this.ctx);
     this.bindKeys();
+    this.canvas.removeEventListener("mouseup", this.start);
     this.game.resetLevel();
     requestAnimationFrame(this.animate);
   }

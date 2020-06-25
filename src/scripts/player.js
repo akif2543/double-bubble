@@ -20,7 +20,12 @@ class Player {
   }
 
   move(dir) {
-    this.img.src = dir ? "blue_side.png" : "bluegray_back.png";
+    if (dir) {
+      this.img.src = dir > 0 ? "blue_right.png" : "blue_left.png";
+    } else {
+      this.img.src = "bluegray_back.png";
+    }
+
     const newX = this.pX + dir;
     if (newX + this.width >= this.game.RWALL) {
       this.pX = this.game.RWALL - this.width;
