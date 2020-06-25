@@ -7,10 +7,10 @@ class Bubble {
     this.vel = opts.vel;
     this.GRAVITY = 0.5;
     this.BOUNCE = -0.9;
-    this.canDivide = this.radius !== 5;
+    this.canDivide = this.radius !== 10;
     this.img = new Image();
     this.img.onload = () => this.draw(ctx);
-    this.img.src = "yellow_disc.png";
+    this.img.src = "assets/yellow_disc.png";
   }
 
   draw(ctx) {
@@ -37,7 +37,7 @@ class Bubble {
   move(delta = 1) {
     const [pX, pY] = this.pos;
     const [vX, vY] = this.vel;
-    this.pos = [pX + (vX * delta) / 30, pY + (vY * delta) / 30];
+    this.pos = [pX + vX / 2, pY + vY / 2];
     this.applyPhysics();
   }
 
@@ -64,7 +64,7 @@ class Bubble {
     const opts = {
       pos: [pX + displacement, pY - displacement],
       vel: [vX * -this.BOUNCE, vY / -this.BOUNCE],
-      radius: this.radius / 2,
+      radius: this.radius - 10,
       color: this.color,
     };
     return [

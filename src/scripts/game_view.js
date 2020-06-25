@@ -12,11 +12,11 @@ class GameView {
       ctx.fillStyle = "white";
       ctx.fillText("Click to start", 400, 300, 200);
     };
-    this.bg.src = "db_bg.jpg";
+    this.bg.src = "assets/db_bg.jpg";
     this.start = this.start.bind(this);
     this.animate = this.animate.bind(this);
     this.checkRestart = this.checkRestart.bind(this);
-    this.first = true;
+    this.canvas = document.getElementById("game");
   }
 
   bindKeys() {
@@ -32,15 +32,9 @@ class GameView {
         case keys.a || keys.A:
           this.game.player.move(-15);
           break;
-        // case keys["A"]:
-        //   this.game.player.move(-15);
-        //   break;
         case keys.d || keys.D:
           this.game.player.move(15);
           break;
-        // case keys["D"]:
-        //   this.game.player.move(15);
-        //   break;
         default:
           this.game.player.move(0);
       }
@@ -51,7 +45,6 @@ class GameView {
   }
 
   welcome() {
-    this.canvas = document.getElementById("game");
     this.canvas.addEventListener("mouseup", this.start);
   }
 
@@ -60,7 +53,7 @@ class GameView {
     this.game.step(delta);
     this.game.draw(this.ctx);
     this.last = now;
-    if (this.game.pause || this.game.over) return;
+    if (this.game.over) return this.end();
     requestAnimationFrame(this.animate);
   }
 
@@ -72,10 +65,17 @@ class GameView {
     requestAnimationFrame(this.animate);
   }
 
+  end() {
+    this.ctx.font = "48px Orbitron";
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText("Click to play again", 300, 300, 400);
+    document.removeEventListener("keydown");
+    document.removeEventListener("keyup");
+    return this.welcome();
+  }
+
   checkRestart() {
     if (!this.game.pause) {
-      clearInterval(this.int);
-      this.int = null;
       this.last = 0;
       this.start();
     }

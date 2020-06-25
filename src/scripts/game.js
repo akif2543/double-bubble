@@ -12,7 +12,7 @@ class Game {
     this.togglePause = this.togglePause.bind(this);
     this.bg = new Image();
     this.bg.onload = () => this.draw(ctx); // ctx.drawImage(this.bg, 0, 0, this.DIMX, this.DIMY);
-    this.bg.src = "db_bg.jpg";
+    this.bg.src = "assets/db_bg.jpg";
   }
 
   setDimensions() {
@@ -55,6 +55,7 @@ class Game {
   }
 
   draw(ctx) {
+    // this.bg.onload = () => this.draw(ctx);
     ctx.clearRect(0, 0, this.DIMX, this.DIMY);
     ctx.drawImage(this.bg, 0, 0, this.DIMX, this.DIMY);
     ctx.font = "24px Orbitron";
@@ -106,17 +107,17 @@ class Game {
     switch (this.level) {
       case 1:
         this.addBubble({
-          pos: [this.LWALL + 11, 200],
+          pos: [this.LWALL + 42, 200],
           vel: [15, 15],
-          radius: 10,
+          radius: 20,
           color: "red",
         });
         break;
       case 2:
         this.addBubble({
-          pos: [this.LWALL + 22, 200],
+          pos: [this.LWALL + 63, 200],
           vel: [15, 15],
-          radius: 20,
+          radius: 30,
           color: "red",
         });
         break;
