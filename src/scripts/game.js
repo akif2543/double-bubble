@@ -9,10 +9,12 @@ class Game {
     this.bubbles = [];
     this.player = new Player(ctx, this);
     this.over = !this.player.lives;
+    this.pause = true;
     this.togglePause = this.togglePause.bind(this);
     this.bg = new Image();
-    this.bg.onload = () => this.draw(ctx); // ctx.drawImage(this.bg, 0, 0, this.DIMX, this.DIMY);
+    this.bg.onload = () => ctx.drawImage(this.bg, 0, 0, this.DIMX, this.DIMY);
     this.bg.src = "assets/db_bg.jpg";
+    this.resetLevel = this.resetLevel.bind(this);
   }
 
   setDimensions() {
@@ -55,7 +57,6 @@ class Game {
   }
 
   draw(ctx) {
-    // this.bg.onload = () => this.draw(ctx);
     ctx.clearRect(0, 0, this.DIMX, this.DIMY);
     ctx.drawImage(this.bg, 0, 0, this.DIMX, this.DIMY);
     ctx.font = "24px Orbitron";
@@ -146,6 +147,7 @@ class Game {
       default:
         break;
     }
+    this.togglePause();
   }
 
   togglePause() {

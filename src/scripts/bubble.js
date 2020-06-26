@@ -80,18 +80,6 @@ class Bubble {
   isCollidedWith(obj) {
     if (Array.isArray(obj)) return false;
 
-    // take 1
-    // const diff = obj instanceof Player ? 0.8 : 0.9;
-
-    // const pX = Math.max(Math.min(this.pos[0], obj.width + obj.pX), obj.pX);
-    // const pY = Math.max(Math.min(this.pos[1], obj.height + obj.pY), obj.pY);
-    // const distance = Math.sqrt(
-    //   (this.pos[0] - pX) ** 2 + (this.pos[1] - pY) ** 2
-    // );
-    // console.log(distance);
-    // return distance < this.radius * diff;
-
-    // take 2
     const dX = Math.abs(this.pos[0] - obj.pX - obj.width / 2) * 1.2;
     const dY = Math.abs(this.pos[1] - obj.pY - obj.height / 2);
 

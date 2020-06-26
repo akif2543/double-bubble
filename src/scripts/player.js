@@ -4,7 +4,6 @@ class Player {
   constructor(ctx, game) {
     this.game = game;
     this.lives = 5;
-    this.score = 0;
     this.width = 50;
     this.height = this.game.DIMY / 6;
     this.pX = this.game.DIMX / 2 - this.width * 0.7;

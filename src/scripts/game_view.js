@@ -14,34 +14,42 @@ class GameView {
     };
     this.bg.src = "assets/db_bg.jpg";
     this.start = this.start.bind(this);
+    this.restart = this.restart.bind(this);
     this.animate = this.animate.bind(this);
-    this.checkRestart = this.checkRestart.bind(this);
+    this.setRestart = this.setRestart.bind(this);
     this.canvas = document.getElementById("game");
+    this.keys = {};
+    this.handler = this.handler.bind(this);
   }
 
-  bindKeys() {
-    const keys = {};
-    const handler = (e) => {
-      e.preventDefault();
-      keys[e.key] = e.type === "keydown";
+  handler(e) {
+    e.preventDefault();
+    this.keys[e.key] = e.type === "keydown";
 
-      switch (true) {
-        case keys[" "]:
-          this.game.player.fire();
-          break;
-        case keys.a || keys.A:
-          this.game.player.move(-15);
-          break;
-        case keys.d || keys.D:
-          this.game.player.move(15);
-          break;
-        default:
-          this.game.player.move(0);
-      }
-    };
+    switch (true) {
+      case this.keys[" "]:
+        this.game.player.fire();
+        break;
+      case this.keys.a || this.keys.A:
+        this.game.player.move(-15);
+        break;
+      case this.keys.d || this.keys.D:
+        this.game.player.move(15);
+        break;
+      default:
+        this.game.player.move(0);
+    }
+  }
 
-    document.addEventListener("keydown", handler);
-    document.addEventListener("keyup", handler);
+  bindKeys(bind) {
+    this.keys = {};
+    if (bind) {
+      document.addEventListener("keydown", this.handler);
+      document.addEventListener("keyup", this.handler);
+    } else {
+      document.removeEventListener("keydown", this.handler);
+      document.removeEventListener("keyup", this.handler);
+    }
   }
 
   welcome() {
@@ -54,31 +62,36 @@ class GameView {
     this.game.draw(this.ctx);
     this.last = now;
     if (this.game.over) return this.end();
+    if (this.game.pause) return this.setRestart();
     requestAnimationFrame(this.animate);
   }
 
   start() {
     this.game = this.game.player.lives ? this.game : new Game(this.ctx);
-    this.bindKeys();
+    this.bindKeys(true);
     this.canvas.removeEventListener("mouseup", this.start);
     this.game.resetLevel();
     requestAnimationFrame(this.animate);
   }
 
+  restart() {
+    this.bindKeys(true);
+    requestAnimationFrame(this.animate);
+  }
+
   end() {
+    this.bindKeys(false);
     this.ctx.font = "48px Orbitron";
     this.ctx.fillStyle = "white";
     this.ctx.fillText("Click to play again", 300, 300, 400);
-    document.removeEventListener("keydown");
-    document.removeEventListener("keyup");
     return this.welcome();
   }
 
-  checkRestart() {
-    if (!this.game.pause) {
-      this.last = 0;
-      this.start();
-    }
+  setRestart() {
+    this.bindKeys(false);
+    this.last = 0;
+    this.game.togglePause();
+    setTimeout(this.restart, 1000);
   }
 }
 
