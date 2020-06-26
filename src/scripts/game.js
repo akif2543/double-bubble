@@ -13,7 +13,7 @@ class Game {
     this.togglePause = this.togglePause.bind(this);
     this.bg = new Image();
     this.bg.onload = () => ctx.drawImage(this.bg, 0, 0, this.DIMX, this.DIMY);
-    this.bg.src = "assets/db_bg.jpg";
+    this.bg.src = "dist/assets/db_bg.jpg";
     this.resetLevel = this.resetLevel.bind(this);
   }
 

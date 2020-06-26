@@ -10,7 +10,7 @@ class Bubble {
     this.canDivide = this.radius !== 10;
     this.img = new Image();
     this.img.onload = () => this.draw(ctx);
-    this.img.src = "assets/yellow_disc.png";
+    this.img.src = "dist/assets/yellow_disc.png";
   }
 
   draw(ctx) {

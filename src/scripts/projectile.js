@@ -6,7 +6,7 @@ class Projectile {
     this.height = this.game.FLOOR - this.pY;
     this.SPEED = 0.75;
     this.img = new Image();
-    this.img.src = "assets/laser.png";
+    this.img.src = "dist/assets/laser.png";
   }
 
   draw(ctx) {

@@ -12,7 +12,7 @@ class GameView {
       ctx.fillStyle = "white";
       ctx.fillText("Click to start", 400, 300, 200);
     };
-    this.bg.src = "assets/db_bg.jpg";
+    this.bg.src = "dist/assets/db_bg.jpg";
     this.start = this.start.bind(this);
     this.restart = this.restart.bind(this);
     this.animate = this.animate.bind(this);

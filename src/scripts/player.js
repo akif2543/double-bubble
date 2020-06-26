@@ -11,7 +11,7 @@ class Player {
     this.img = new Image();
     this.img.onload = () =>
       ctx.drawImage(this.img, this.pX, this.pY, this.width, this.height);
-    this.img.src = "assets/bluegray_back.png";
+    this.img.src = "dist/assets/bluegray_back.png";
   }
 
   draw(ctx) {
@@ -20,9 +20,10 @@ class Player {
 
   move(dir) {
     if (dir) {
-      this.img.src = dir > 0 ? "assets/blue_right.png" : "assets/blue_left.png";
+      this.img.src =
+        dir > 0 ? "dist/assets/blue_right.png" : "dist/assets/blue_left.png";
     } else {
-      this.img.src = "assets/bluegray_back.png";
+      this.img.src = "dist/assets/bluegray_back.png";
     }
 
     const newX = this.pX + dir;
@@ -40,7 +41,7 @@ class Player {
   }
 
   fire() {
-    this.img.src = "assets/bluegray_back.png";
+    this.img.src = "dist/assets/bluegray_back.png";
     this.game.setProjectile(
       new Projectile([this.pX + 22.5, this.pY], this.game)
     );
