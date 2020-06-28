@@ -11,7 +11,19 @@ class Player {
     this.img = new Image();
     this.img.onload = () =>
       ctx.drawImage(this.img, this.pX, this.pY, this.width, this.height);
-    this.img.src = "dist/assets/bluegray_back.png";
+    this.img.src = "dist/assets/blue_back.png";
+    this.left = [
+      "dist/assets/blue_left1.png",
+      "dist/assets/blue_left2.png",
+      "dist/assets/blue_left3.png",
+      "dist/assets/blue_left4.png",
+    ];
+    this.right = [
+      "dist/assets/blue_right1.png",
+      "dist/assets/blue_right2.png",
+      "dist/assets/blue_right3.png",
+      "dist/assets/blue_right4.png",
+    ];
   }
 
   draw(ctx) {
@@ -19,11 +31,16 @@ class Player {
   }
 
   move(dir) {
-    if (dir) {
-      this.img.src =
-        dir > 0 ? "dist/assets/blue_right.png" : "dist/assets/blue_left.png";
+    if (dir > 0) {
+      const motion = this.right.shift();
+      this.img.src = motion;
+      this.right.push(motion);
+    } else if (dir < 0) {
+      const motion = this.left.shift();
+      this.img.src = motion;
+      this.left.push(motion);
     } else {
-      this.img.src = "dist/assets/bluegray_back.png";
+      this.img.src = "dist/assets/blue_back.png";
     }
 
     const newX = this.pX + dir;
@@ -41,7 +58,7 @@ class Player {
   }
 
   fire() {
-    this.img.src = "dist/assets/bluegray_back.png";
+    this.img.src = "dist/assets/blue_back.png";
     this.game.setProjectile(
       new Projectile([this.pX + 22.5, this.pY], this.game)
     );

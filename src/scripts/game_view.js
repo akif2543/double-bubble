@@ -31,10 +31,10 @@ class GameView {
         this.game.player.fire();
         break;
       case this.keys.a || this.keys.A:
-        this.game.player.move(-15);
+        this.game.player.move(-20);
         break;
       case this.keys.d || this.keys.D:
-        this.game.player.move(15);
+        this.game.player.move(20);
         break;
       default:
         this.game.player.move(0);

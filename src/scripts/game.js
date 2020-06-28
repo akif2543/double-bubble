@@ -5,7 +5,7 @@ class Game {
   constructor(ctx) {
     this.ctx = ctx;
     this.setDimensions();
-    this.level = 1;
+    this.level = 3;
     this.bubbles = [];
     this.player = new Player(ctx, this);
     this.over = !this.player.lives;
@@ -62,7 +62,9 @@ class Game {
     ctx.font = "24px Orbitron";
     ctx.fillStyle = "white";
     ctx.fillText(
-      `${this.player.lives} ${this.player.lives === 1 ? "life" : "lives"} left`,
+      `${this.player.lives >= 0 ? this.player.lives : "0"} ${
+        this.player.lives === 1 ? "life" : "lives"
+      } left`,
       this.LWALL + 15,
       25,
       150
