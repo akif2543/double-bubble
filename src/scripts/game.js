@@ -5,7 +5,7 @@ class Game {
   constructor(ctx) {
     this.ctx = ctx;
     this.setDimensions();
-    this.level = 3;
+    this.level = 1;
     this.bubbles = [];
     this.player = new Player(ctx, this);
     this.over = !this.player.lives;
