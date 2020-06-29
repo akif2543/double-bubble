@@ -37,7 +37,7 @@ class Bubble {
   move(delta = 1) {
     const [pX, pY] = this.pos;
     const [vX, vY] = this.vel;
-    this.pos = [pX + vX / 2, pY + vY / 2];
+    this.pos = [pX + vX / 3, pY + vY / 3];
     this.applyPhysics();
   }
 

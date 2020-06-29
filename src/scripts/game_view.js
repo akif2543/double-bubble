@@ -10,9 +10,12 @@ class GameView {
       ctx.drawImage(this.bg, 0, 0, 1000, 600);
       ctx.font = "48px Orbitron";
       ctx.fillStyle = "white";
-      ctx.fillText("Click to start", 400, 300, 200);
+      ctx.fillText("Click to start", 400, 400, 200);
+      ctx.font = "24px Orbitron";
+      ctx.fillText("w | d to move", 415, 500, 200);
+      ctx.fillText("space to fire", 420, 530, 200);
     };
-    this.bg.src = "dist/assets/db_bg.jpg";
+    this.bg.src = "dist/assets/title_screen.jpg";
     this.start = this.start.bind(this);
     this.restart = this.restart.bind(this);
     this.animate = this.animate.bind(this);
@@ -52,8 +55,16 @@ class GameView {
     }
   }
 
-  welcome() {
+  welcome(start) {
     this.canvas.addEventListener("mouseup", this.start);
+    this.ctx.drawImage(this.bg, 0, 0, 1000, 600);
+    this.ctx.font = "48px Orbitron";
+    this.ctx.fillStyle = "white";
+    if (start) {
+      this.ctx.fillText("Click to start", 400, 400, 200);
+    } else {
+      this.ctx.fillText("Click to play again", 300, 400, 400);
+    }
   }
 
   animate(now) {
@@ -81,10 +92,7 @@ class GameView {
 
   end() {
     this.bindKeys(false);
-    this.ctx.font = "48px Orbitron";
-    this.ctx.fillStyle = "white";
-    this.ctx.fillText("Click to play again", 300, 300, 400);
-    return this.welcome();
+    return this.welcome(false);
   }
 
   setRestart() {

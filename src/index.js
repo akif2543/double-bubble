@@ -7,5 +7,5 @@ document.addEventListener("DOMContentLoaded", () => {
   const ctx = canvas.getContext("2d");
 
   const view = new GameView(ctx);
-  view.welcome();
+  view.welcome(true);
 });

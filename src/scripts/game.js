@@ -80,6 +80,7 @@ class Game {
   checkCollisions() {
     this.bubbles.forEach((b) => {
       if (b.isCollidedWith(this.player)) {
+        this.player.move(0);
         this.player.decrementLife();
         this.checkStatus("p");
       } else if (b.isCollidedWith(this.projectile)) {
