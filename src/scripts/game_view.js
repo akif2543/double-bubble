@@ -12,7 +12,7 @@ class GameView {
       ctx.fillStyle = "white";
       ctx.fillText("Click to start", 400, 400, 200);
       ctx.font = "24px Orbitron";
-      ctx.fillText("w | d to move", 415, 500, 200);
+      ctx.fillText("a | d to move", 415, 500, 200);
       ctx.fillText("space to fire", 420, 530, 200);
     };
     this.bg.src = "dist/assets/title_screen.jpg";
