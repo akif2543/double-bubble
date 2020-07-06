@@ -12,8 +12,8 @@ class GameView {
       ctx.fillStyle = "white";
       ctx.fillText("Click to start", 400, 400, 200);
       ctx.font = "24px Orbitron";
-      ctx.fillText("a | d to move", 419, 500, 200);
-      ctx.fillText("space to fire", 420, 530, 200);
+      ctx.fillText("a + d or arrows to move", 350, 500, 300);
+      ctx.fillText("w, space, or up to fire", 359, 530, 300);
     };
     this.bg.src = "dist/assets/title_screen.jpg";
     this.start = this.start.bind(this);
@@ -30,13 +30,13 @@ class GameView {
     this.keys[e.key] = e.type === "keydown";
 
     switch (true) {
-      case this.keys[" "]:
+      case this.keys[" "] || this.keys.w || this.keys.W || this.keys.ArrowUp:
         this.game.player.fire();
         break;
-      case this.keys.a || this.keys.A:
+      case this.keys.a || this.keys.A || this.keys.ArrowLeft:
         this.game.player.move(-20);
         break;
-      case this.keys.d || this.keys.D:
+      case this.keys.d || this.keys.D || this.keys.ArrowRight:
         this.game.player.move(20);
         break;
       default:
