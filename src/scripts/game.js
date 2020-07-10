@@ -127,13 +127,27 @@ class Game {
         break;
       case 3:
         this.addBubble({
+          pos: [this.LWALL + 63, 200],
+          vel: [15, 15],
+          radius: 30,
+          color: "red",
+        });
+        this.addBubble({
+          pos: [this.RWALL - 63, 200],
+          vel: [-15, 15],
+          radius: 30,
+          color: "red",
+        });
+        break;
+      case 4:
+        this.addBubble({
           pos: [this.LWALL + 84, 200],
           vel: [15, 15],
           radius: 40,
           color: "red",
         });
         break;
-      case 4:
+      case 5:
         this.addBubble({
           pos: [this.LWALL + 84, 200],
           vel: [15, 15],

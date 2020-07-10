@@ -24,6 +24,7 @@ class Player {
       "dist/assets/blue_right3.png",
       "dist/assets/blue_right4.png",
     ];
+    this.moving = false;
   }
 
   draw(ctx) {
@@ -31,19 +32,23 @@ class Player {
   }
 
   move(dir) {
+    const newX = this.pX + (this.moving ? dir : dir * 1.5);
+
     if (dir > 0) {
       const motion = this.right.shift();
       this.img.src = motion;
       this.right.push(motion);
+      this.moving = true;
     } else if (dir < 0) {
       const motion = this.left.shift();
       this.img.src = motion;
       this.left.push(motion);
+      this.moving = true;
     } else {
       this.img.src = "dist/assets/blue_back.png";
+      this.moving = false;
     }
 
-    const newX = this.pX + dir;
     if (newX + this.width >= this.game.RWALL) {
       this.pX = this.game.RWALL - this.width;
     } else if (newX <= this.game.LWALL) {

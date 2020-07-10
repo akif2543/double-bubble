@@ -29,19 +29,40 @@ class GameView {
     e.preventDefault();
     this.keys[e.key] = e.type === "keydown";
 
-    switch (true) {
-      case this.keys[" "] || this.keys.w || this.keys.W || this.keys.ArrowUp:
-        this.game.player.fire();
-        break;
-      case this.keys.a || this.keys.A || this.keys.ArrowLeft:
-        this.game.player.move(-20);
-        break;
-      case this.keys.d || this.keys.D || this.keys.ArrowRight:
-        this.game.player.move(20);
-        break;
-      default:
-        this.game.player.move(0);
+    let valid = false;
+
+    if (this.keys[" "] || this.keys.w || this.keys.W || this.keys.ArrowUp) {
+      valid = true;
+      this.game.player.fire();
     }
+
+    if (this.keys.a || this.keys.A || this.keys.ArrowLeft) {
+      valid = true;
+      this.game.player.move(-20);
+    }
+
+    if (this.keys.d || this.keys.D || this.keys.ArrowRight) {
+      valid = true;
+      this.game.player.move(20);
+    }
+
+    if (!valid) {
+      this.game.player.move(0);
+    }
+
+    // switch (true) {
+    //   case this.keys[" "] || this.keys.w || this.keys.W || this.keys.ArrowUp:
+    //     this.game.player.fire();
+    //     break;
+    //   case this.keys.a || this.keys.A || this.keys.ArrowLeft:
+    //     this.game.player.move(-20);
+    //     break;
+    //   case this.keys.d || this.keys.D || this.keys.ArrowRight:
+    //     this.game.player.move(20);
+    //     break;
+    //   default:
+    //     this.game.player.move(0);
+    // }
   }
 
   bindKeys(bind) {
